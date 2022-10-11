@@ -4,6 +4,8 @@ import com.example.booklibrary.Service.BooksService;
 import com.example.booklibrary.domain.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,34 +13,36 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 public class BooksController {
 
     @Autowired
     BooksService booksService;
 
-//    @RequestMapping("/")
-//    public String homePage(){
-//        return "book";
-//    }
+    @RequestMapping("/")
+    public String homePage(){
+        return "book";
+    }
 
-    @GetMapping("/books")
-    public ResponseEntity<?> getBooks(){
+    @GetMapping ("/AllBooks")
+    public String getBooks(Model model){
         List<Book> books = booksService.getAllBooks();
         if(books.isEmpty()){
-            return ResponseEntity.ok("No book found!");
+            model.addAttribute("msg", "no books");
+            return "AllBooks";
         }else{
-            return ResponseEntity.ok(books);
+            model.addAttribute("books", books);
+            return "AllBooks";
         }
 
     }
-    @PostMapping("/books")
-    public ResponseEntity<?> saveBook(@Valid @RequestBody Book book){
+    @PostMapping("/newBook")
+    public ResponseEntity<?> saveBook(@Valid Book book){
         Book book1= booksService.saveBook(book);
         if(book1.getBookId()!=null){
-            return ResponseEntity.ok(book1);
+            return ResponseEntity.ok("Success");
         }else {
-            return ResponseEntity.ok("Book Not Saved");
+            return ResponseEntity.ok("Error");
         }
     }
     @GetMapping ("/books/{bookId}")

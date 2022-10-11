@@ -1,23 +1,63 @@
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Div Align Attribbute</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <meta charset="ISO-8859-1">
+    <title>Book Registration</title>
 </head>
 <body>
-<div align="left">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    labore et dolore magna aliqua.
-</div>
-<div align="right">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    labore et dolore magna aliqua.
-</div>
 <div align="center">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    labore et dolore magna aliqua.
+    <h1>Book Registration</h1>
+    <div class="alert alert-warning alert-dismissible fade show" id="serverResponse" style="display: none"
+         align="center" role="alert"><span
+            class="image model_alert_ico"><i class="icon-alert-triangle"></i></span>
+    </div>
+    <form id = "bookForm" action="#" th:action="@{/newBook}" method="post" role="form" >
+        <label>Book Title:</label>
+        <input type="text" name="bookTitle" /><br/>
+
+        <label>Author Name:</label>
+        <input type="text" name="bookAuthor" /><br/>
+
+        <label>Edition:</label>
+        <input type="text" name="bookEdition" /><br/>
+        <br/>
+
+        <button type="submit">Save Book</button>
+    </form>
 </div>
-<div align="justify">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    labore et dolore magna aliqua.
+<a href="/AllBooks" type="button" class="btn btn-success">Load Books</a>
+<div>
+<script>
+    $('document').ready(function () {
+        let serverResponse = $('#serverResponse');
+        $("#bookForm").submit(function (event) {
+            event.preventDefault();
+            let post_url = $(this).attr("action");
+            let form_data = $(this).serialize();
+            console.log(form_data);
+
+            $.post(post_url, form_data, function (data) {
+                console.log(data);
+
+                if (data === "Success") {
+                    serverResponse.html("Book Added Successfully");
+                    serverResponse.show();
+                    $("#bookForm").trigger("reset");
+
+                }
+                if(data === "Error") {
+                    serverResponse.html("unable to save book");
+                    serverResponse.show();
+                }
+            })
+        })
+    })
+
+</script>
+     <script th:src="@{/book.js}"> </script>
 </div>
 </body>
 </html>
