@@ -28,7 +28,7 @@ public class BooksController {
     public String getBooks(Model model){
         List<Book> books = booksService.getAllBooks();
         if(books.isEmpty()){
-            model.addAttribute("msg", "no book found!");
+            model.addAttribute("msg", "no books found!");
             return "AllBooks";
         }else{
             model.addAttribute("books", books);
