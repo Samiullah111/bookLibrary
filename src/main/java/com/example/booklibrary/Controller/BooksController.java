@@ -28,7 +28,7 @@ public class BooksController {
     public String getBooks(Model model){
         List<Book> books = booksService.getAllBooks();
         if(books.isEmpty()){
-            model.addAttribute("msg", "no books");
+            model.addAttribute("msg", "no book found!");
             return "AllBooks";
         }else{
             model.addAttribute("books", books);
@@ -82,12 +82,6 @@ public class BooksController {
             booksService.Update(books);
             return ResponseEntity.ok(books);
         }
-
-
-
-
-
-
     }
 
 }
