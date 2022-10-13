@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -50,15 +50,10 @@ public class BooksController {
             Optional<Book> book  = booksService.getBooksById(bookId);
             return ResponseEntity.ok(book);
     }
-    @DeleteMapping("/books/{bookId}")
-    private ResponseEntity<?> deleteBook(@PathVariable("bookId") Long bookId){
-        Optional<Book> bk =  booksService.getBooksById(bookId);
-        if(bk.isEmpty())
-        return ResponseEntity.ok("Item with id: " + bookId + " not exist.");
-        else  {
+    @RequestMapping("/deleteBooks/{bookId}")
+    private RedirectView deleteBook(@PathVariable("bookId") Long bookId, Model model){
             booksService.delete(bookId);
-            return ResponseEntity.ok("Item Deleted");
-        }
+            return  new RedirectView("/AllBooks");
     }
     @GetMapping ("/booksByTitle/{bookTitle}")
     private ResponseEntity<?> getBookByTitle(@PathVariable("bookTitle") String bookTitle) {

@@ -16,6 +16,7 @@
         <th scope="col">Title</th>
         <th scope="col">Author</th>
         <th scope="col">Edition</th>
+        <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -24,10 +25,37 @@
         <td th:text="${book.getBookTitle()}">Mark</td>
         <td th:text="${book.getBookAuthor()}">Otto</td>
         <td th:text="${book.getBookEdition()}">@mdo</td>
+        <td> <a th:href="@{'deleteBooks/' + ${book.getBookId()}}" type="button" class="btn btn-danger">Delete</a></td>
     </tr>
     </tbody>
 </table>
 
+<!--<script>-->
+<!--    $('document').ready(function () {-->
+<!--        let serverResponse = $('#serverResponse');-->
+<!--        $("#bookForm").submit(function (event) {-->
+<!--            event.preventDefault();-->
+<!--            let post_url = $(this).attr("action");-->
+<!--            let form_data = $(this).serialize();-->
+<!--            console.log(form_data);-->
 
+<!--            $.post(post_url, form_data, function (data) {-->
+<!--                console.log(data);-->
+
+<!--                if (data === "Success") {-->
+<!--                    serverResponse.html("Book Added Successfully");-->
+<!--                    serverResponse.show();-->
+<!--                    $("#bookForm").trigger("reset");-->
+
+<!--                }-->
+<!--                if(data === "Error") {-->
+<!--                    serverResponse.html("unable to save book");-->
+<!--                    serverResponse.show();-->
+<!--                }-->
+<!--            })-->
+<!--        })-->
+<!--    })-->
+
+<!--</script>-->
 </body>
 </html>
