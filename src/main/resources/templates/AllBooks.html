@@ -25,7 +25,8 @@
         <td th:text="${book.getBookTitle()}">Mark</td>
         <td th:text="${book.getBookAuthor()}">Otto</td>
         <td th:text="${book.getBookEdition()}">@mdo</td>
-        <td> <a th:href="@{'deleteBooks/' + ${book.getBookId()}}" type="button" class="btn btn-danger">Delete</a></td>
+        <td> <a th:href="@{'deleteBooks/' + ${book.getBookId()}}" type="button" class="btn btn-danger">Delete</a>
+         <a th:href="@{'updateBookPage/' + ${book.getBookId()}}" type="button" class="btn btn-primary">Update</a></td>
     </tr>
     </tbody>
 </table>

@@ -20,9 +20,9 @@ public class BooksService {
         return bookList;
 
     }
-    public Optional<Book> getBooksById(long id)
+    public Book getBooksById(long id)
     {
-       Optional<Book> book= (Optional<Book>) (bookRepository.findById(id));
+        Book book= bookRepository.findByBookId(id);
        return book;
     }
     public void delete(Long id)

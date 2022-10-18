@@ -46,8 +46,8 @@ public class BooksController {
         }
     }
     @GetMapping ("/books/{bookId}")
-    private ResponseEntity<Optional<Book>> getBooks(@PathVariable("bookId") Long bookId){
-            Optional<Book> book  = booksService.getBooksById(bookId);
+    private ResponseEntity<Book> getBooks(@PathVariable("bookId") Long bookId){
+            Book book  = booksService.getBooksById(bookId);
             return ResponseEntity.ok(book);
     }
     @RequestMapping("/deleteBooks/{bookId}")
@@ -65,12 +65,18 @@ public class BooksController {
 
         }
     }
-    @PutMapping("/books/{bookId}")
+    @RequestMapping("/updateBookPage/{bookId}")
+    public String updateBookPage(@PathVariable("bookId") Long bookId, Model model){
+        Book book = booksService.getBooksById(bookId);
+        System.out.println(book);
+        model.addAttribute("book", book);
+        return "updateform";
+    }
 
     private ResponseEntity<?> update(@RequestBody Book books,@PathVariable("bookId") Long bookId)
     {
-        Optional<Book> bk =  booksService.getBooksById(bookId);
-        if(bk.isEmpty()){
+        Book bk =  booksService.getBooksById(bookId);
+        if(bk.getBookId().equals(null)){
             return ResponseEntity.ok("Book Title " + bookId + " Not Found ");
         }
         else{
